@@ -7,8 +7,8 @@ import '../css/Home.css'
 function Home(){    
 
     const [searchQuery, setSearchQuery] = useState("");
-
     const [movies, setMovies] = useState([]);
+
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -32,10 +32,30 @@ function Home(){
     }, []);
 
 
-    function handleSearch(e){
+    const handleSearch = async (e) => {
         e.preventDefault();
-        alert(`Searching for ${searchQuery}`)
-    }
+        if(!searchQuery.trim()){
+            return;
+        }
+
+        if(loading){
+            return;
+        }
+
+        setLoading(true);
+        try{
+            const searchResults = await searchMovies(searchQuery);
+            setMovies(searchResults);
+            setError(null);
+        }
+        catch(error){
+            console.log(error);
+            setError("Failed to search movies");
+        }
+        finally{
+            setLoading(false);
+        }
+    };
 
     return( 
         <div className="home">
