@@ -1,3 +1,5 @@
+import '../css/Card.css'
+
 function Card({ information }) {
     
     function handleFavouriteClick() {
@@ -6,13 +8,16 @@ function Card({ information }) {
 
     return (
     <div className="card">
-        <img src={information.image} alt={information.title} />
+        <div className="card-image">
+            <img src={information.image} alt={information.title} />
 
-        <div className="card-overlay">
-            <button className="favourite-btn" onClick={handleFavouriteClick}>
-                ❤︎
-            </button>
+            <div className="card-overlay">
+                <button className="favourite-btn" onClick={handleFavouriteClick}>
+                    ❤︎
+                </button>
+            </div>
         </div>
+        
 
         <div className="card-info">
             <h3>{information.title}</h3>

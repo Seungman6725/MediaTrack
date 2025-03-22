@@ -1,5 +1,6 @@
 import Card from '../components/Card.jsx'
 import { useState } from 'react'
+import '../css/Home.css'
 
 function Home(){    
 

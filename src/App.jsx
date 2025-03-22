@@ -2,6 +2,8 @@ import Home from './pages/Home.jsx'
 import Favourites from './pages/Favourites.jsx'
 import NavBar from './components/NavBar.jsx';
 import {Routes, Route} from 'react-router-dom'
+import './css/App.css'
+
 
 function App() {
 
