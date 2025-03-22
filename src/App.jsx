@@ -2,13 +2,14 @@ import Home from './pages/Home.jsx'
 import Favourites from './pages/Favourites.jsx'
 import NavBar from './components/NavBar.jsx';
 import {Routes, Route} from 'react-router-dom'
+import {FavouriteProvider} from './contexts/FavouriteContext.jsx'
 import './css/App.css'
 
 
 function App() {
 
   return (
-    <div>
+    <FavouriteProvider>
       <NavBar/>
       <main className="main-content">
         <Routes>
@@ -16,7 +17,7 @@ function App() {
           <Route path="/favourites" element={<Favourites />}/>
         </Routes>
       </main>
-    </div>
+    </FavouriteProvider>
   );
 }
 

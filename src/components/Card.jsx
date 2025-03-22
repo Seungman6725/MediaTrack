@@ -1,9 +1,18 @@
 import '../css/Card.css'
+import { useFavouriteContext } from '../contexts/FavouriteContext';
 
 function Card({ information }) {
-    
-    function handleFavouriteClick() {
-        alert("Favourite button clicked");
+    const { isFavourite, addFavourite, removeFavourite } = useFavouriteContext();
+    const favourite = isFavourite(information.id);
+
+    function handleFavouriteClick(e) {
+        e.preventDefault();
+        if(favourite){
+            removeFavourite(information);
+        }
+        else{
+            addFavourite(information);
+        }
     }
 
     return (
@@ -13,8 +22,9 @@ function Card({ information }) {
                 alt={information.title} />
 
             <div className="card-overlay">
-                <button className="favourite-btn" onClick={handleFavouriteClick}>
-                    ❤︎
+                <button className={`favourite-btn ${favourite ? "active" : ""}`}
+                    onClick={handleFavouriteClick}>
+                    ❤
                 </button>
             </div>
         </div>
