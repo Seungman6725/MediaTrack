@@ -9,7 +9,8 @@ function Card({ information }) {
     return (
     <div className="card">
         <div className="card-image">
-            <img src={information.image} alt={information.title} />
+            <img src={`https://image.tmdb.org/t/p/w500${information.poster_path}`} 
+                alt={information.title} />
 
             <div className="card-overlay">
                 <button className="favourite-btn" onClick={handleFavouriteClick}>
@@ -21,7 +22,7 @@ function Card({ information }) {
 
         <div className="card-info">
             <h3>{information.title}</h3>
-            <p>{information.releaseDate}</p>
+            <p>{information.release_date?.split("-")[0]}</p>
         </div>
     </div>
   );
