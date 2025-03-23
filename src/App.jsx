@@ -1,6 +1,7 @@
 import Home from './pages/Home.jsx'
 import Favourites from './pages/Favourites.jsx'
 import Play from './pages/Play.jsx'
+import MyPicks from './pages/MyPicks.jsx'
 import NavBar from './components/NavBar.jsx';
 import {Routes, Route} from 'react-router-dom'
 import {FavouriteProvider} from './contexts/FavouriteContext.jsx'
@@ -15,8 +16,9 @@ function App() {
       <main className="main-content">
         <Routes>
           <Route path="/" element={<Home />}/>
-          <Route path="/favourites" element={<Favourites />}/>
           <Route path="/play" element={<Play />}/>
+          <Route path="/my-picks" element={<MyPicks />}/>
+          <Route path="/favourites" element={<Favourites />}/>
         </Routes>
       </main>
     </FavouriteProvider>

@@ -6,11 +6,9 @@ function Card({ information, type }) {
     const favourite = isFavourite(information.id);
 
     const imageUrl = type === "movie" 
-    ? `https://image.tmdb.org/t/p/w500${information.poster_path}` 
+    ? `https://image.tmdb.org/t/p/w500${information.backdrop_path}` 
     : information.background_image;
     
-    // https://rawg.io/media/cover/${information.cover.image_id}.jpg
-
     const title = type === "movie" ? information.title : information.name;
 
     const releaseDate = type === "movie" 
@@ -27,6 +25,16 @@ function Card({ information, type }) {
         }
     }
 
+    function handleAddClick(e){
+        e.preventDefault();
+        console.log("Add button clicked");
+        //
+        //
+        // Fill in
+        //
+        //
+    }
+
     return (
     <div className="card">
         <div className="card-image">
@@ -38,6 +46,8 @@ function Card({ information, type }) {
                     onClick={handleFavouriteClick}>
                     ❤
                 </button>
+
+                <button className="add-btn" onClick="handleAddClick">✚</button>
             </div>
         </div>
         
