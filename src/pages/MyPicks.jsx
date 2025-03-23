@@ -4,7 +4,7 @@ import AddedCard from '../components/AddedCard';
 function MyPicks(){
     const { added } = useAddContext();
   
-  if (added){
+  if (added.length > 0){
     return (
       <div className='added'>
         <h2>Watch & Play List</h2>
@@ -15,11 +15,13 @@ function MyPicks(){
       </div>
       );
   }
-  return (
-    <div className="favourites-empty">
-      <h2>Nothing to Watch/Play Yet</h2>
-    </div>
-  );
+  else{
+    return (
+      <div className="favourites-empty">
+        <h2>Nothing to Watch/Play Yet</h2>
+        <p>Your Watch & Play List is empty. Add movies, shows, and games you're excited to check out!</p>      </div>
+    );
+  }
 }
 
 export default MyPicks;
