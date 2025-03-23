@@ -5,7 +5,7 @@ import imageNotFound from '../assets/image-not-found-scaled.png';
 import { useLocation } from "react-router-dom";
 
 
-function Card({ information, type }) {
+function Card({ information}) {
     const { isFavourite, addFavourite, removeFavourite } = useFavouriteContext();
     const favourite = isFavourite(information.id);
 

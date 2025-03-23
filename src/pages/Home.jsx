@@ -78,7 +78,7 @@ function Home(){
                 : (
                 <div className="movies-grid">
                     {movies.map((movie) => 
-                    <Card information={movie} type="movie" key={movie.id}/>)}
+                    <Card information={movie} key={movie.id}/>)}
                 </div>)}
         </div>
     );
