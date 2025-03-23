@@ -54,16 +54,12 @@
   top: 60px;
 }
 
+.add-btn.active {
+  color: lightgreen;
+}
+
 .favourite-btn.active {
   color: red;
-}
-
-.add-btn.active {
-  color: red;
-}
-
-.favourite-btn :hover {
-  cursor: pointer;
 }
 
 .card-info {

@@ -53,9 +53,7 @@ function Card({ information, type }) {
                 </button>
 
                 <button className={`add-btn ${added ? "active" : ""}`} 
-                    onClick={handleAddClick}>✚</button>
-
-                <button className={`add-btn`} onClick={handleAddClick}>
+                    onClick={handleAddClick}>
                     {added ? "✔" : "✚"}
                 </button>
             </div>

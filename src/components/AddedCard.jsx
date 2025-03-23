@@ -1,4 +1,3 @@
-import '../css/Card.css'
 import '../css/AddedCard.css'
 import { useFavouriteContext } from '../contexts/FavouriteContext';
 import { useAddContext } from '../contexts/AddContext';
