@@ -1,4 +1,4 @@
-import '../css/AddedCard.css'
+import '../css/Card.css'
 import { useFavouriteContext } from '../contexts/FavouriteContext';
 import { useAddContext } from '../contexts/AddContext';
 import { useLocation } from 'react-router-dom';

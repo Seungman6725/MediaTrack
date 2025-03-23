@@ -12,7 +12,8 @@
 }
 
 .card:hover .favourite-btn,
-.card:hover .add-btn {
+.card:hover .add-btn,
+.card:hover .remove-btn {
   visibility: visible;
 }
 
@@ -33,7 +34,8 @@
 }
 
 .favourite-btn,
-.add-btn {
+.add-btn,
+.remove-btn {
   position: absolute;
   visibility: hidden;
   top: 10px;
@@ -49,6 +51,7 @@
   align-items: center;
   transition: all 0.3s ease-in-out;
 }
+
 
 .add-btn {
   top: 60px;
