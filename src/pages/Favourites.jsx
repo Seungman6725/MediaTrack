@@ -1,6 +1,6 @@
 import '../css/Favourites.css'
 import { useFavouriteContext } from '../contexts/FavouriteContext';
-import AddedCard from '../components/AddedCard';
+import Card from '../components/Card';
 
 function Favourites() {
 
@@ -12,7 +12,7 @@ function Favourites() {
         <h2>Your Favourites</h2>
         <div className="movies-grid">
           {favourites.map((movie) => 
-          <AddedCard information={movie} type="movie" key={movie.id}/>)}
+          <Card information={movie} type="movie" key={movie.id}/>)}
         </div>
       </div>
       );

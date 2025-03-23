@@ -2,6 +2,7 @@ import '../css/Card.css'
 import { useFavouriteContext } from '../contexts/FavouriteContext';
 import { useAddContext } from '../contexts/AddContext';
 import imageNotFound from '../assets/image-not-found-scaled.png';
+import { useLocation } from "react-router-dom";
 
 
 function Card({ information, type }) {
@@ -11,15 +12,14 @@ function Card({ information, type }) {
     const { isAdded, add, removeAdded } = useAddContext();
     const added = isAdded(information.id);
 
-    const imageUrl = type === "movie" 
-    ? `https://image.tmdb.org/t/p/w500${information.backdrop_path}` 
-    : information.background_image;
+    const imageUrl = information.backdrop_path
+        ? `https://image.tmdb.org/t/p/w500${information.backdrop_path}`
+        : information.background_image || imageNotFound;
     
-    const title = type === "movie" ? information.title : information.name;
+    const title = information.title || information.name || "Title not found";
+    const releaseDate = information.release_date || information.released || "Unknown";
 
-    const releaseDate = type === "movie" 
-        ? information.release_date 
-        : information.released;
+    const location = useLocation();
 
     function handleFavouriteClick(e) {
         e.preventDefault();
@@ -41,25 +41,55 @@ function Card({ information, type }) {
         }
     }
 
+    function handleRemoveClick(e) {
+        e.preventDefault();
+
+        if(location.pathname === "/favourites"){
+            if(favourite){
+                removeFavourite(information);
+            }
+            else{
+                addFavourite(information);
+            }
+        }else{
+            if(added){
+                removeAdded(information);
+            }
+            else{
+                add(information);
+            }
+        }
+    }
+
+    let overlay = null;
+
+    if(location.pathname === "/" || location.pathname === "/video-games"){
+        overlay = (<div className="card-overlay">
+            <button className={`favourite-btn ${favourite ? "active" : ""}`}
+                onClick={handleFavouriteClick}>
+                ❤
+            </button>
+
+            <button className={`add-btn ${added ? "active" : ""}`} 
+                onClick={handleAddClick}>
+                {added ? "✔" : "✚"}
+            </button>
+        </div>);
+    }
+    else{
+        overlay =(<div className="card-overlay">
+            <button className="remove-btn"
+                onClick={handleRemoveClick}>
+                ✖
+            </button>
+        </div>);
+    }
     return (
     <div className="card">
         <div className="card-image">
-        <img src={imageUrl ||imageNotFound} alt="Image not found" />
-
-            <div className="card-overlay">
-                <button className={`favourite-btn ${favourite ? "active" : ""}`}
-                    onClick={handleFavouriteClick}>
-                    ❤
-                </button>
-
-                <button className={`add-btn ${added ? "active" : ""}`} 
-                    onClick={handleAddClick}>
-                    {added ? "✔" : "✚"}
-                </button>
-            </div>
+            <img src={imageUrl ||imageNotFound} alt="Image not found" />
+            {overlay}
         </div>
-        
-
         <div className="card-info">
             <h3>{title}</h3>
             <p>{releaseDate?.split("-")[0]}</p>
