@@ -3,6 +3,8 @@
   /* border: solid black 2px; */
   background-color: rgb(28, 28, 28);
   color: white;
+  display: flex;
+  flex-direction: column;
 }
 
 .card:hover {
@@ -19,7 +21,7 @@
 }
 
 .card-image img {
-  width: 100%;
+  width: 350px;
   height: 200px;
   object-fit: cover;
   border-top-left-radius: 20px;

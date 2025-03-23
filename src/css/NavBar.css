@@ -1,10 +1,11 @@
 .navbar {
-  background-color: #000000;
+  background-color: #202020;
   padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
 }
 
 .navbar-brand {
@@ -17,11 +18,10 @@
   gap: 2rem;
 }
 
-.nav-link {
+.navbar-link.active {
   font-size: 1rem;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
   transition: background-color 0.2s;
+  border-bottom: solid white 2px;
 }
 
 .nav-link:hover {
