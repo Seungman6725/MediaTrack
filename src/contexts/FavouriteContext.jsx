@@ -23,8 +23,8 @@ export const FavouriteProvider = ({children}) => {
         setFavourites(f => [...f, movie]);
     }
 
-    const removeFavourite = (movie) => {
-        setFavourites(f => f.filter(movie => movie.id !== movie.id));
+    const removeFavourite = (movieToRemove) => {
+        setFavourites(f => f.filter(favourite => favourite.id !== movieToRemove.id));
     }
 
     const isFavourite = (movieId) => {

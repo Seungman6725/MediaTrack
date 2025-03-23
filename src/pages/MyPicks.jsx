@@ -1,5 +1,5 @@
 import { useAddContext } from '../contexts/AddContext';
-import Card from '../components/Card';
+import AddedCard from '../components/AddedCard';
 
 function MyPicks(){
     const { added } = useAddContext();
@@ -10,7 +10,7 @@ function MyPicks(){
         <h2>Watch & Play List</h2>
         <div className="movies-grid">
           {added.map((movie) => 
-          <Card information={movie} type="movie" key={movie.id}/>)}
+          <AddedCard information={movie} type="movie" key={movie.id}/>)}
         </div>
       </div>
       );

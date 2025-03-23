@@ -23,8 +23,8 @@ export const AddProvider = ({children}) => {
         setAdded(f => [...f, movie]);
     }
 
-    const removeAdded = (movie) => {
-        setAdded(f => f.filter(movie => movie.id !== movie.id));
+    const removeAdded = (movieToRemove) => {
+        setAdded(f => f.filter(added => added.id !== movieToRemove.id));
     }
 
     const isAdded = (movieId) => {
