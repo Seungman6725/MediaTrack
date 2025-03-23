@@ -1,5 +1,7 @@
 import '../css/Card.css'
 import { useFavouriteContext } from '../contexts/FavouriteContext';
+import imageNotFound from '../assets/image-not-found-scaled.png';
+
 
 function Card({ information, type }) {
     const { isFavourite, addFavourite, removeFavourite } = useFavouriteContext();
@@ -38,8 +40,7 @@ function Card({ information, type }) {
     return (
     <div className="card">
         <div className="card-image">
-            <img src={imageUrl} 
-                alt={title} />
+        <img src={imageUrl ||imageNotFound} alt="Image not found" />
 
             <div className="card-overlay">
                 <button className={`favourite-btn ${favourite ? "active" : ""}`}
