@@ -1,5 +1,6 @@
 import Home from './pages/Home.jsx'
 import Favourites from './pages/Favourites.jsx'
+import Play from './pages/Play.jsx'
 import NavBar from './components/NavBar.jsx';
 import {Routes, Route} from 'react-router-dom'
 import {FavouriteProvider} from './contexts/FavouriteContext.jsx'
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />}/>
           <Route path="/favourites" element={<Favourites />}/>
+          <Route path="/play" element={<Play />}/>
         </Routes>
       </main>
     </FavouriteProvider>

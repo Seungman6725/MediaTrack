@@ -1,36 +1,34 @@
 import Card from '../components/Card.jsx'
 import { useState , useEffect } from 'react'
-import {searchMovies, getPopularMovies} from '../services/movies.js'
+import { getPopularGames, searchGames } from '../services/videoGames.js';
 
-import '../css/Home.css'
 
-function Home(){    
-
+function Play(){
     const [searchQuery, setSearchQuery] = useState("");
-    const [movies, setMovies] = useState([]);
+
+    const [games, setGames] = useState([]);
 
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
-
+    
     useEffect(() => {
-        
-        const loadPopularMovies = async () => {
-            try{
-                const popularMovies = await getPopularMovies();
-                setMovies(popularMovies);
-            }
-            catch(error){
-                console.log(error);
-                setError("Failed to load movies");
-            }
-            finally{
-                setLoading(false);
-            }
-        } 
-
-        loadPopularMovies();
-    }, []);
-
+            
+            const loadPopularGames = async () => {
+                try{
+                    const popularGames = await getPopularGames();
+                    setGames(popularGames);
+                }
+                catch(error){
+                    console.log(error);
+                    setError("Failed to load games");
+                }
+                finally{
+                    setLoading(false);
+                }
+            } 
+    
+            loadPopularGames();
+        }, []);
 
     const handleSearch = async (e) => {
         e.preventDefault();
@@ -44,26 +42,26 @@ function Home(){
 
         setLoading(true);
         try{
-            const searchResults = await searchMovies(searchQuery);
-            setMovies(searchResults);
+            const searchResults = await searchGames(searchQuery);
+            setGames(searchResults);
             setError(null);
         }
         catch(error){
             console.log(error);
-            setError("Failed to search movies");
+            setError("Failed to search games");
         }
         finally{
             setLoading(false);
         }
     };
-
+    
     return( 
         <div className="home">
 
             <form onSubmit={handleSearch} className="seach-form">
                 <input 
                     type="text" 
-                    placeholder="Search for a movie" 
+                    placeholder="Search for a game" 
                     className="search-input" 
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
@@ -72,16 +70,17 @@ function Home(){
                     Search
                 </button>
             </form>
+
             {error && <div className="error">{error}</div>}
             
             {loading ? (<div className="loading">Loading...</div>)
                 : (
                 <div className="movies-grid">
-                    {movies.map((movie) => 
-                    <Card information={movie} type="movie" key={movie.id}/>)}
+                    {games.map((game) => 
+                    <Card information={game} type="game" key={game.id}/>)}
                 </div>)}
         </div>
     );
 }
 
-export default Home;
+export default Play;

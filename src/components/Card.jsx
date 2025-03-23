@@ -1,9 +1,21 @@
 import '../css/Card.css'
 import { useFavouriteContext } from '../contexts/FavouriteContext';
 
-function Card({ information }) {
+function Card({ information, type }) {
     const { isFavourite, addFavourite, removeFavourite } = useFavouriteContext();
     const favourite = isFavourite(information.id);
+
+    const imageUrl = type === "movie" 
+    ? `https://image.tmdb.org/t/p/w500${information.poster_path}` 
+    : information.background_image;
+    
+    // https://rawg.io/media/cover/${information.cover.image_id}.jpg
+
+    const title = type === "movie" ? information.title : information.name;
+
+    const releaseDate = type === "movie" 
+        ? information.release_date 
+        : information.released;
 
     function handleFavouriteClick(e) {
         e.preventDefault();
@@ -18,8 +30,8 @@ function Card({ information }) {
     return (
     <div className="card">
         <div className="card-image">
-            <img src={`https://image.tmdb.org/t/p/w500${information.poster_path}`} 
-                alt={information.title} />
+            <img src={imageUrl} 
+                alt={title} />
 
             <div className="card-overlay">
                 <button className={`favourite-btn ${favourite ? "active" : ""}`}
@@ -31,8 +43,8 @@ function Card({ information }) {
         
 
         <div className="card-info">
-            <h3>{information.title}</h3>
-            <p>{information.release_date?.split("-")[0]}</p>
+            <h3>{title}</h3>
+            <p>{releaseDate?.split("-")[0]}</p>
         </div>
     </div>
   );
