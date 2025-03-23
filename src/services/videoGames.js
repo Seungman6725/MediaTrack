@@ -1,4 +1,6 @@
-const API_KEY = "dd9366e16ad9447587194d905718461c";
+import { RAWG_API_KEY } from "../config.js";
+
+const API_KEY = RAWG_API_KEY;
 const BASE_URL = "https://api.rawg.io/api";
 
 export const getPopularGames = async () => {

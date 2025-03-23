@@ -11,13 +11,13 @@ function NavBar(){
     return (
         <nav className="navbar">
             <div className="navbar-brand">
-                <Link to="/">MediaTrack</Link>
+                <Link to="/movies">MediaTrack</Link>
             </div>
 
             <div className="navbar-links">
-                <Link to="/" className={`navbar-link ${isActive('/') ? 'active' : ''}`}>Watch</Link>
-                <Link to="/play" className={`navbar-link ${isActive('/play') ? 'active' : ''}`}>Play</Link>
-                <Link to="/my-picks" className={`navbar-link ${isActive('/my-picks') ? 'active' : ''}`}>My Picks</Link>
+                <Link to="/movies" className={`navbar-link ${isActive('/movies') ? 'active' : ''}`}>Movies</Link>
+                <Link to="/video-games" className={`navbar-link ${isActive('/video-games') ? 'active' : ''}`}>Video Games</Link>
+                <Link to="/watch&play-list" className={`navbar-link ${isActive('/watch&play-list') ? 'active' : ''}`}>Watch & Play List</Link>
                 <Link to="/favourites" className={`navbar-link ${isActive('/favourites') ? 'active' : ''}`}>Favourites</Link>
             </div>
         </nav>

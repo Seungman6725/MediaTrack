@@ -7,7 +7,7 @@ function MyPicks(){
   if (added){
     return (
       <div className='added'>
-        <h2>My Picks</h2>
+        <h2>Watch & Play List</h2>
         <div className="movies-grid">
           {added.map((movie) => 
           <Card information={movie} type="movie" key={movie.id}/>)}
