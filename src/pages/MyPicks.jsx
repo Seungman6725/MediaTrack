@@ -10,7 +10,7 @@ function MyPicks(){
         <h2>My Picks</h2>
         <div className="movies-grid">
           {added.map((movie) => 
-          <Card information={movie} key={movie.id}/>)}
+          <Card information={movie} type="movie" key={movie.id}/>)}
         </div>
       </div>
       );
