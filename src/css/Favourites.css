@@ -32,13 +32,6 @@
   line-height: 1.6;
 }
 
-.movies-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 20px;
-  justify-items: left;
-}
-
 @keyframes fadeIn {
   from {
     opacity: 0;
