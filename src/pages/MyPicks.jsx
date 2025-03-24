@@ -1,3 +1,4 @@
+import '../css/Favourites.css';
 import { useAddContext } from '../contexts/AddContext';
 import Card from '../components/Card';
 

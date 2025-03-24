@@ -2,7 +2,7 @@ import Card from '../components/Card.jsx'
 import { useState , useEffect } from 'react'
 import { getPopularGames, searchGames } from '../services/videoGames.js';
 
-import '../css/Play.css'
+import '../css/Home.css'
 
 
 function Play(){

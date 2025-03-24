@@ -4,6 +4,7 @@ import { useAddContext } from '../contexts/AddContext';
 import imageNotFound from '../assets/image-not-found-scaled.png';
 import { useLocation } from "react-router-dom";
 
+import React, { useState } from 'react';
 
 function Card({ information}) {
     const { isFavourite, addFavourite, removeFavourite } = useFavouriteContext();
@@ -20,6 +21,7 @@ function Card({ information}) {
     const releaseDate = information.release_date || information.released || "Unknown";
 
     const location = useLocation();
+    const [isRemoving, setIsRemoving] = useState(false);
 
     function handleFavouriteClick(e) {
         e.preventDefault();
@@ -43,22 +45,25 @@ function Card({ information}) {
 
     function handleRemoveClick(e) {
         e.preventDefault();
+        setIsRemoving(true);
 
-        if(location.pathname === "/favourites"){
-            if(favourite){
-                removeFavourite(information);
+        setTimeout(() => {
+            if(location.pathname === "/favourites"){
+                if(favourite){
+                    removeFavourite(information);
+                }
+                else{
+                    addFavourite(information);
+                }
+            }else{
+                if(added){
+                    removeAdded(information);
+                }
+                else{
+                    add(information);
+                }
             }
-            else{
-                addFavourite(information);
-            }
-        }else{
-            if(added){
-                removeAdded(information);
-            }
-            else{
-                add(information);
-            }
-        }
+        }, 300);
     }
 
     let overlay = null;
@@ -85,7 +90,7 @@ function Card({ information}) {
         </div>);
     }
     return (
-    <div className="card">
+    <div className={`card ${isRemoving ? "removing" : ""}`}>
         <div className="card-image">
             <img src={imageUrl ||imageNotFound} alt="Image not found" />
             {overlay}
