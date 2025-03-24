@@ -1,4 +1,4 @@
-import '../css/Favourites.css';
+import '../css/MyPicks.css';
 import { useAddContext } from '../contexts/AddContext';
 import Card from '../components/Card';
 
@@ -18,7 +18,7 @@ function MyPicks(){
   }
   else{
     return (
-      <div className="favourites-empty">
+      <div className="added-empty">
         <h2>Nothing to Watch/Play Yet</h2>
         <p>Your Watch & Play List is empty. Add movies, shows, and games you're excited to check out!</p>      </div>
     );
