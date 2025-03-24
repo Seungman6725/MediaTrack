@@ -1,6 +1,6 @@
-import { RAWG_API_KEY } from "../config.js";
+// import { RAWG_API_KEY } from "../config.js";
 
-const API_KEY = RAWG_API_KEY;
+const API_KEY = import.meta.env.VITE_API_RAWG_KEY;
 const BASE_URL = "https://api.rawg.io/api";
 
 export const getPopularGames = async () => {
