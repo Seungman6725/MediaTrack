@@ -58,7 +58,7 @@
 .movies-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 1.5rem;
+  row-gap: 3rem;
   padding: 1rem;
   width: 100%;
   box-sizing: border-box;
@@ -77,6 +77,11 @@
   left: 0;
   z-index: 100;
 }
+
+.content-container {
+  display: flex;
+}
+
 
 @keyframes fadeIn {
   from {
