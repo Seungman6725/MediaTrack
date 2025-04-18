@@ -1,6 +1,6 @@
 import Card from '../components/Card.jsx'
 import { useState, useEffect } from 'react'
-import { searchMovies, getPopularMovies } from '../services/movies.js'
+import { searchMovies, getPopularMovies, getMoviesByGenre } from '../services/movies.js'
 import GenreTabs from '../components/GenreTabs.jsx'
 import '../css/Home.css'
 
@@ -20,8 +20,16 @@ function Home() {
 
         const loadPopularMovies = async () => {
             try {
-                const popularMovies = await getPopularMovies();
-                setMovies(popularMovies);
+                setLoading(true);
+                if (selectedGenre === 'All') {
+                    const popularMovies = await getPopularMovies();
+                    setMovies(popularMovies);
+                }
+                else {
+                    const popularMovies = await getMoviesByGenre(selectedGenre);
+                    setMovies(popularMovies);
+                }
+                setError(null);
             }
             catch (error) {
                 console.log(error);
@@ -33,7 +41,7 @@ function Home() {
         }
 
         loadPopularMovies();
-    }, []);
+    }, [selectedGenre]);
 
 
     const handleSearch = async (e) => {
