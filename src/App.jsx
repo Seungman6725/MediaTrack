@@ -17,6 +17,9 @@ function App() {
     <FavouriteProvider>
       <AddProvider>
         <NavBar />
+        <head>
+          <title>MediaTrack</title>
+        </head>
         <main className="main-content">
           <Routes>
             <Route path="/" element={<Home key={location.key} />} />
