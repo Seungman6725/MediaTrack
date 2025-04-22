@@ -16,7 +16,7 @@ const API_KEY = import.meta.env.VITE_API_RAWG_KEY;
 const BASE_URL = "https://api.rawg.io/api";
 
 export const getPopularGames = async () => {
-    const response = await fetch(`${BASE_URL}/games?ordering=-metacritic&page_size=20&key=${API_KEY}`);
+    const response = await fetch(`${BASE_URL}/games?ordering=-added&page_size=20&key=${API_KEY}`);
     const data = await response.json();
     return data.results;
 };
