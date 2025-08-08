@@ -2,6 +2,7 @@ import Card from '../components/Card.jsx'
 import { useState, useEffect } from 'react'
 import { searchMovies, getPopularMovies, getMoviesByGenre } from '../services/movies.js'
 import GenreTabs from '../components/GenreTabs.jsx'
+import Pagination from '../components/Pagination.jsx'
 import '../css/Home.css'
 
 function Home() {
@@ -98,10 +99,20 @@ function Home() {
                 />
                 {loading ? (<div className="loading">Loading...</div>)
                     : (
-                        <div className="movies-grid">
-                            {movies.map((movie) =>
-                                <Card information={movie} key={movie.id} />)}
-                        </div>)}
+                        <div className='movies-section'>
+                            <div className="movies-grid">
+                                {movies.map((movie) =>
+                                    <Card information={movie} key={movie.id} />)}
+                            </div>
+
+                            <Pagination
+                                currentPage={1}
+                                totalPages={10}
+                                onPageChange={(page) => console.log('Page changed to:', page)}
+                            />
+                        </div>
+                    )}
+
             </div>
         </div>
     );
