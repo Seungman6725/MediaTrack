@@ -14,22 +14,27 @@ function Home() {
     const [loading, setLoading] = useState(true);
     const [selectedGenre, setSelectedGenre] = useState('All');
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [totalResults, setTotalResults] = useState(0);
 
     const genres = ['All', 'Action', 'Comedy', 'Adventure', 'Sci-Fi', 'Horror', 'Thriller', 'Fantasy', 'Romance', 'Crime'];
 
     useEffect(() => {
-
         const loadPopularMovies = async () => {
             try {
                 setLoading(true);
+                let data;
+
                 if (selectedGenre === 'All') {
-                    const popularMovies = await getPopularMovies();
-                    setMovies(popularMovies);
+                    data = await getPopularMovies(currentPage);
+                } else {
+                    data = await getMoviesByGenre(selectedGenre, currentPage);
                 }
-                else {
-                    const popularMovies = await getMoviesByGenre(selectedGenre);
-                    setMovies(popularMovies);
-                }
+
+                setMovies(data.results);
+                setTotalPages(data.total_pages);
+                setTotalResults(data.total_results);
                 setError(null);
             }
             catch (error) {
@@ -42,7 +47,7 @@ function Home() {
         }
 
         loadPopularMovies();
-    }, [selectedGenre]);
+    }, [selectedGenre, currentPage]); // Added currentPage to dependencies
 
 
     const handleSearch = async (e) => {
@@ -57,8 +62,11 @@ function Home() {
 
         setLoading(true);
         try {
-            const searchResults = await searchMovies(searchQuery);
-            setMovies(searchResults);
+            const data = await searchMovies(searchQuery, 1); // Start search at page 1
+            setMovies(data.results);
+            setTotalPages(data.total_pages);
+            setTotalResults(data.total_results);
+            setCurrentPage(1);
             setError(null);
         }
         catch (error) {
@@ -72,7 +80,14 @@ function Home() {
 
     const handleGenreClick = (genre) => {
         setSelectedGenre(genre);
+        setCurrentPage(1);
     }
+
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+        // Optional: Scroll to top when page changes
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
 
     return (
         <div className="home">
@@ -106,9 +121,9 @@ function Home() {
                             </div>
 
                             <Pagination
-                                currentPage={1}
-                                totalPages={10}
-                                onPageChange={(page) => console.log('Page changed to:', page)}
+                                currentPage={currentPage}
+                                totalPages={totalPages}
+                                onPageChange={handlePageChange}
                             />
                         </div>
                     )}
