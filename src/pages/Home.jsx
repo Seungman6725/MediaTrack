@@ -47,7 +47,7 @@ function Home() {
         }
 
         loadPopularMovies();
-    }, [selectedGenre, currentPage]); // Added currentPage to dependencies
+    }, [selectedGenre, currentPage]);
 
 
     const handleSearch = async (e) => {
@@ -85,7 +85,6 @@ function Home() {
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
-        // Optional: Scroll to top when page changes
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
