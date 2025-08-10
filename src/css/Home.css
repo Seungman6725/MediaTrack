@@ -43,7 +43,6 @@
   background-color: rgba(190, 190, 190, 0.75);
 }
 
-
 @media (max-width: 639px) {
   .home {
     padding: 1rem 0;
@@ -54,15 +53,23 @@
   }
 }
 
-
 .movies-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  row-gap: 3rem;
+  gap: 2rem;
   padding: 1rem;
   width: 100%;
   box-sizing: border-box;
   justify-items: center;
+}
+
+/* Ensure the movies section can expand properly */
+.movies-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  /* Important: allows flex item to shrink below content size */
 }
 
 .loading {
@@ -78,10 +85,20 @@
   z-index: 100;
 }
 
+/* Sidebar layout: GenreTabs on left, movies + pagination on right */
 .content-container {
   display: flex;
+  gap: 2rem;
+  width: 100%;
+  align-items: flex-start;
 }
 
+/* Style for the movies and pagination section */
+.movies-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
 
 @keyframes fadeIn {
   from {

@@ -11,26 +11,48 @@ const genreSlugMapping = {
     'Racing': 'racing'
 };
 
-
-const API_KEY = import.meta.env.VITE_API_RAWG_KEY;
+const API_KEY = import.meta.env.VITE_API_RAWG_KEY;;
 const BASE_URL = "https://api.rawg.io/api";
 
-export const getPopularGames = async () => {
-    const response = await fetch(`${BASE_URL}/games?ordering=-added&page_size=20&key=${API_KEY}`);
+// Updated to support pagination
+export const getPopularGames = async (page = 1) => {
+    const response = await fetch(`${BASE_URL}/games?ordering=-added&page_size=20&page=${page}&key=${API_KEY}`);
     const data = await response.json();
-    return data.results;
+    return {
+        results: data.results,
+        count: data.count,
+        next: data.next,
+        previous: data.previous,
+        total_pages: Math.ceil(data.count / 20),
+        current_page: page
+    };
 };
 
-export const searchGames = async (query) => {
-    const response = await fetch(`${BASE_URL}/games?search=${query}&page_size=20&key=${API_KEY}`);
+// Updated to support pagination
+export const searchGames = async (query, page = 1) => {
+    const response = await fetch(`${BASE_URL}/games?search=${query}&page_size=20&page=${page}&key=${API_KEY}`);
     const data = await response.json();
-    return data.results;
+    return {
+        results: data.results,
+        count: data.count,
+        next: data.next,
+        previous: data.previous,
+        total_pages: Math.ceil(data.count / 20),
+        current_page: page
+    };
 };
 
-export const getGamesByGenre = async (genre) => {
+// Updated to support pagination
+export const getGamesByGenre = async (genre, page = 1) => {
     const slug = genreSlugMapping[genre];
-    const response = await fetch(`https://api.rawg.io/api/games?key=${API_KEY}&genres=${slug}`);
+    const response = await fetch(`${BASE_URL}/games?key=${API_KEY}&genres=${slug}&page_size=20&page=${page}`);
     const data = await response.json();
-    return data.results;
+    return {
+        results: data.results,
+        count: data.count,
+        next: data.next,
+        previous: data.previous,
+        total_pages: Math.ceil(data.count / 20),
+        current_page: page
+    };
 };
-

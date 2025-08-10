@@ -2,7 +2,7 @@ import Card from '../components/Card.jsx'
 import { useState, useEffect } from 'react'
 import { getPopularGames, searchGames, getGamesByGenre } from '../services/videoGames.js';
 import GenreTabs from '../components/GenreTabs.jsx'
-
+import Pagination from '../components/Pagination.jsx'
 
 import '../css/Home.css'
 
@@ -16,22 +16,27 @@ function Play() {
     const [loading, setLoading] = useState(true);
     const [selectedGenre, setSelectedGenre] = useState('All');
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [totalResults, setTotalResults] = useState(0);
+
     const genres = ['All', 'Action', 'Adventure', 'RPG', 'Shooter', 'Strategy', 'Fighting', 'Sports', 'Indie', 'Racing'];
 
     useEffect(() => {
-
         const loadPopularGames = async () => {
             try {
                 setLoading(true);
+                let data;
+
                 if (selectedGenre === 'All') {
-                    const popularGames = await getPopularGames();
-                    setGames(popularGames);
+                    data = await getPopularGames(currentPage);
+                } else {
+                    data = await getGamesByGenre(selectedGenre, currentPage);
                 }
 
-                else {
-                    const popularGames = await getGamesByGenre(selectedGenre);
-                    setGames(popularGames);
-                }
+                setGames(data.results);
+                setTotalPages(data.total_pages);
+                setTotalResults(data.count);
                 setError(null);
             }
             catch (error) {
@@ -44,7 +49,7 @@ function Play() {
         }
 
         loadPopularGames();
-    }, [selectedGenre]);
+    }, [selectedGenre, currentPage]);
 
     const handleSearch = async (e) => {
         e.preventDefault();
@@ -58,8 +63,11 @@ function Play() {
 
         setLoading(true);
         try {
-            const searchResults = await searchGames(searchQuery);
-            setGames(searchResults);
+            const data = await searchGames(searchQuery, 1);
+            setGames(data.results);
+            setTotalPages(data.total_pages);
+            setTotalResults(data.count);
+            setCurrentPage(1);
             setError(null);
         }
         catch (error) {
@@ -73,8 +81,13 @@ function Play() {
 
     const handleGenreClick = (genre) => {
         setSelectedGenre(genre);
+        setCurrentPage(1);
     }
 
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
     return (
         <div className="home">
 
@@ -100,10 +113,19 @@ function Play() {
                 />
                 {loading ? (<div className="loading">Loading...</div>)
                     : (
-                        <div className="movies-grid">
-                            {games.map((game) =>
-                                <Card information={game} type="game" key={game.id} />)}
-                        </div>)}
+                        <div className="movies-section">
+                            <div className="movies-grid">
+                                {games.map((game) =>
+                                    <Card information={game} type="game" key={game.id} />)}
+                            </div>
+
+                            <Pagination
+                                currentPage={currentPage}
+                                totalPages={totalPages}
+                                onPageChange={handlePageChange}
+                            />
+                        </div>
+                    )}
             </div>
         </div>
     );

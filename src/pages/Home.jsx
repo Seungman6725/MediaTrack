@@ -2,6 +2,7 @@ import Card from '../components/Card.jsx'
 import { useState, useEffect } from 'react'
 import { searchMovies, getPopularMovies, getMoviesByGenre } from '../services/movies.js'
 import GenreTabs from '../components/GenreTabs.jsx'
+import Pagination from '../components/Pagination.jsx'
 import '../css/Home.css'
 
 function Home() {
@@ -13,22 +14,27 @@ function Home() {
     const [loading, setLoading] = useState(true);
     const [selectedGenre, setSelectedGenre] = useState('All');
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [totalResults, setTotalResults] = useState(0);
 
     const genres = ['All', 'Action', 'Comedy', 'Adventure', 'Sci-Fi', 'Horror', 'Thriller', 'Fantasy', 'Romance', 'Crime'];
 
     useEffect(() => {
-
         const loadPopularMovies = async () => {
             try {
                 setLoading(true);
+                let data;
+
                 if (selectedGenre === 'All') {
-                    const popularMovies = await getPopularMovies();
-                    setMovies(popularMovies);
+                    data = await getPopularMovies(currentPage);
+                } else {
+                    data = await getMoviesByGenre(selectedGenre, currentPage);
                 }
-                else {
-                    const popularMovies = await getMoviesByGenre(selectedGenre);
-                    setMovies(popularMovies);
-                }
+
+                setMovies(data.results);
+                setTotalPages(data.total_pages);
+                setTotalResults(data.total_results);
                 setError(null);
             }
             catch (error) {
@@ -41,7 +47,7 @@ function Home() {
         }
 
         loadPopularMovies();
-    }, [selectedGenre]);
+    }, [selectedGenre, currentPage]);
 
 
     const handleSearch = async (e) => {
@@ -56,8 +62,11 @@ function Home() {
 
         setLoading(true);
         try {
-            const searchResults = await searchMovies(searchQuery);
-            setMovies(searchResults);
+            const data = await searchMovies(searchQuery, 1); // Start search at page 1
+            setMovies(data.results);
+            setTotalPages(data.total_pages);
+            setTotalResults(data.total_results);
+            setCurrentPage(1);
             setError(null);
         }
         catch (error) {
@@ -71,7 +80,13 @@ function Home() {
 
     const handleGenreClick = (genre) => {
         setSelectedGenre(genre);
+        setCurrentPage(1);
     }
+
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
 
     return (
         <div className="home">
@@ -98,10 +113,20 @@ function Home() {
                 />
                 {loading ? (<div className="loading">Loading...</div>)
                     : (
-                        <div className="movies-grid">
-                            {movies.map((movie) =>
-                                <Card information={movie} key={movie.id} />)}
-                        </div>)}
+                        <div className='movies-section'>
+                            <div className="movies-grid">
+                                {movies.map((movie) =>
+                                    <Card information={movie} key={movie.id} />)}
+                            </div>
+
+                            <Pagination
+                                currentPage={currentPage}
+                                totalPages={totalPages}
+                                onPageChange={handlePageChange}
+                            />
+                        </div>
+                    )}
+
             </div>
         </div>
     );

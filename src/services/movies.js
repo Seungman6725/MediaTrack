@@ -10,28 +10,48 @@ const genreIdMapping = {
     'Romance': '10749',
     'Crime': '80'
 };
-
-
 const API_KEY = import.meta.env.VITE_API_TMDB_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
 
-export const getPopularMovies = async () => {
-    const response = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}`);
-    const data = await response.json();
-    return data.results;
-};
+// Updated to support pagination
+export const getPopularMovies = async (page = 1) => {
 
-export const searchMovies = async (query) => {
     const response = await fetch(
-        `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(
-            query)}`);
+        `${BASE_URL}/discover/movie?api_key=${API_KEY}&sort_by=revenue.desc&page=${page}`
+    );
+
     const data = await response.json();
-    return data.results;
+    return {
+        results: data.results,
+        page: data.page,
+        total_pages: data.total_pages,
+        total_results: data.total_results
+    };
 };
 
-export const getMoviesByGenre = async (genre) => {
-    const genreId = genreIdMapping[genre];
-    const response = await fetch(`${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=${genreId}`);
+export const searchMovies = async (query, page = 1) => {
+    const response = await fetch(
+        `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}&page=${page}`
+    );
     const data = await response.json();
-    return data.results;
+    return {
+        results: data.results,
+        page: data.page,
+        total_pages: data.total_pages,
+        total_results: data.total_results
+    };
+};
+
+export const getMoviesByGenre = async (genre, page = 1) => {
+    const genreId = genreIdMapping[genre];
+    const response = await fetch(
+        `${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=${genreId}&sort_by=revenue.desc&page=${page}`
+    );
+    const data = await response.json();
+    return {
+        results: data.results,
+        page: data.page,
+        total_pages: data.total_pages,
+        total_results: data.total_results
+    };
 };
