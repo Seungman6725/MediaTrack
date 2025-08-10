@@ -15,7 +15,11 @@ const BASE_URL = "https://api.themoviedb.org/3";
 
 // Updated to support pagination
 export const getPopularMovies = async (page = 1) => {
-    const response = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}&page=${page}`);
+
+    const response = await fetch(
+        `${BASE_URL}/discover/movie?api_key=${API_KEY}&sort_by=revenue.desc&page=${page}`
+    );
+
     const data = await response.json();
     return {
         results: data.results,
@@ -41,7 +45,7 @@ export const searchMovies = async (query, page = 1) => {
 export const getMoviesByGenre = async (genre, page = 1) => {
     const genreId = genreIdMapping[genre];
     const response = await fetch(
-        `${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=${genreId}&page=${page}`
+        `${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=${genreId}&sort_by=revenue.desc&page=${page}`
     );
     const data = await response.json();
     return {
